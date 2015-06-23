@@ -31,7 +31,7 @@
                 </td>
                 <td class="cart_description">
                     <p class="cart_total_price">
-                        <strong>{{ ($order->status)? 'Finalizado' : 'Em processo' }}</strong>
+                        <strong>{{ (array_key_exists($order->status, $status))? $status[$order->status] : 'Aguardando confirmaçao' }}</strong>
                     </p>
                 </td>
             </tr>

@@ -6,21 +6,6 @@
 
 @section('content')
 
-    <h3>
-        Teste para PagSeguro:
-
-        @if ( Session::has('transaction') )
-            <strong> {{ Session::get('transaction') }}</strong> ?
-        @endif
-
-    </h3>
-
-    @if ( Session::has('transactionPost') )
-
-        {{ print_r(Session::get('transactionPost')) }}
-
-    @endif
-
     <div class="features_items"><!--features_items-->
 
         <h2 class="title text-center">

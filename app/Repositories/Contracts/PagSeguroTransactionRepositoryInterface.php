@@ -31,4 +31,6 @@ interface PagSeguroTransactionRepositoryInterface {
 
     public function getTransactionStatus($id = null);
 
+    public function updateOrderStatus($order_id, $status);
+
 }

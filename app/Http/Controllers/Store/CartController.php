@@ -35,7 +35,12 @@ class CartController extends Controller
     {
         $cart = $this->getCart();
         $produto = $this->product->findProduct($id);
-        $image = $produto->images->first()->imageFileName;
+
+        if(count($produto->images)) {
+            $image = $produto->images->first()->imageFileName;
+        } else {
+            $image = '';
+        }
 
         $cart->add($id, $produto->name, $produto->price, $image);
 

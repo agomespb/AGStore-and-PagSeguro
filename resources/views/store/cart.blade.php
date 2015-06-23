@@ -30,7 +30,11 @@
                             <td class="car_product text-center">
 
                                 <a href="{{ route('product_show', ['id'=>$id]) }}">
-                                    <img src="{{ url('uploads/' . $item['image']) }}" alt="" height="100"/>
+                                    @if($item['image'])
+                                        <img src="{{ url('uploads/' . $item['image']) }}" alt="" height="100"/>
+                                    @else
+                                        <img src="{{ url('images/no-img.jpg') }}" alt="" height="100"/>
+                                    @endif
                                 </a>
 
                             </td>

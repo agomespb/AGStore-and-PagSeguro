@@ -14,6 +14,7 @@ class CreatePagSeguroTransactionTable extends Migration
     {
         Schema::create('pag_seguro_transaction', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('order_id')->unsigned();
             $table->string('code', 36)->unique();
             $table->timestamp('date');
             $table->smallInteger('type');

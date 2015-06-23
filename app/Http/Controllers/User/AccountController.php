@@ -3,16 +3,19 @@
 namespace AGStore\Http\Controllers\User;
 
 use AGStore\Http\Requests;
+use AGStore\Repositories\Contracts\OrderRepositoryInterface;
 use Illuminate\Contracts\Auth\Guard;
 use AGStore\Http\Controllers\Controller;
 
 class AccountController extends Controller
 {
     protected $auth;
+    protected $order;
 
-    public function __construct(Guard $auth)
+    public function __construct(Guard $auth, OrderRepositoryInterface $orderRepositoryInterface)
     {
         $this->auth = $auth;
+        $this->order = $orderRepositoryInterface;
     }
 
     /**
@@ -30,6 +33,8 @@ class AccountController extends Controller
             $items = $orders->first()->items()->get();
         }
 
-        return view('user.account', compact('auth', 'orders', 'items'));
+        $status = $this->order->getTransactionStatus();
+
+        return view('user.account', compact('auth', 'orders', 'items', 'status'));
     }
 }

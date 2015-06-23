@@ -10,7 +10,6 @@ use AGStore\Repositories\Contracts\PagSeguroTransactionRepositoryInterface;
 use AGStore\Repositories\Contracts\ProductRepositoryInterface;
 use AGStore\Repositories\Contracts\TagRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
@@ -88,19 +87,11 @@ class StoreController extends Controller
 
         if ($parameters && array_key_exists('transaction', $parameters)) {
 
-            $user_id = 1;
             $code = str_replace('-', "", $parameters['transaction']);;
             $find = $transaction->findByTransaction($code)->first();
 
-            if(Auth::check()){
-                $user_id = Auth::user()->id;
-            }
-
-            if (is_null($find) && count($find) <= 0) {
-                $dataTransaction = [
-                    'code' => $code,
-                    'user_id' => $user_id
-                ];
+            if (is_null($find) && count($find) < 1) {
+                $dataTransaction = ['code' => $code];
                 $transaction->insertTransaction($dataTransaction);
             }
         }

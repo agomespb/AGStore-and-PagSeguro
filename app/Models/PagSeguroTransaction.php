@@ -20,7 +20,7 @@ class PagSeguroTransaction extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'order_id',
         'code',
         'date',
         'type',

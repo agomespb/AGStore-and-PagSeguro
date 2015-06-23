@@ -3,73 +3,23 @@
 namespace AGStore\Repositories;
 
 use AGStore\Models\PagSeguroTransaction;
+use AGStore\Repositories\Contracts\OrderRepositoryInterface;
 use AGStore\Repositories\Contracts\PagSeguroTransactionRepositoryInterface;
 use DateTime;
-use Illuminate\Support\Facades\Auth;
 
 class PagSeguroTransactionRepository extends AbstractRepository implements PagSeguroTransactionRepositoryInterface
 {
 
-    protected $transactionStatus = [
-
-        /*
-         * o comprador iniciou a transação, mas até o momento o PagSeguro
-         * não recebeu nenhuma informação sobre o pagamento.
-         */
-        1 => 'Aguardando pagamento',
-
-        /*
-         * o comprador optou por pagar com um cartão de crédito e o PagSeguro
-         * está analisando o risco da transação.
-         */
-        2 => 'Em análise',
-
-        /*
-         * a transação foi paga pelo comprador e o PagSeguro já recebeu uma
-         * confirmação da instituição financeira responsável pelo processamento.
-         */
-        3 => 'Paga',
-
-        /*
-         * a transação foi paga e chegou ao final de seu prazo de liberação
-         * sem ter sido retornada e sem que haja nenhuma disputa aberta.
-         */
-        4 => 'Disponível',
-
-        /*
-         * o comprador, dentro do prazo de liberação da transação, abriu uma disputa.
-         */
-        5 => 'Em disputa',
-
-        /*
-         * o valor da transação foi devolvido para o comprador.
-         */
-        6 => 'Devolvida',
-
-        /*
-         * a transação foi cancelada sem ter sido finalizada.
-         */
-        7 => 'Cancelada',
-
-        /*
-         * o valor da transação foi devolvido para o comprador.
-         */
-        8 => 'Chargeback debitado',
-
-        /*
-         * o comprador abriu uma solicitação de chargeback junto à operadora do cartão de crédito.
-         */
-        9 => 'Em contestação',
-    ];
-
+    protected $order;
 
     /**
      * @param PagSeguro $model
      */
-    public function __construct(PagSeguroTransaction $model)
+    public function __construct(PagSeguroTransaction $model, OrderRepositoryInterface $orderRepositoryInterface)
     {
         /** @var PagSeguro $model */
         $this->model = $model;
+        $this->order = $orderRepositoryInterface;
     }
 
     public function findByTransaction($code)
@@ -89,6 +39,7 @@ class PagSeguroTransactionRepository extends AbstractRepository implements PagSe
         $code = str_replace('-', "", e($xml->code));
 
         $dataTransaction = [
+            'order_id' => e($xml->reference),
             'code' => $code,
             'date' => date('Y-m-d H:i:s', strtotime($xml->date)),
             'type' => e($xml->type),
@@ -107,17 +58,13 @@ class PagSeguroTransactionRepository extends AbstractRepository implements PagSe
         $find = $this->findByTransaction($code)->first();
 
         if ($find) {
+
             $dataTransaction['updated_at'] = new DateTime();
             $transactionInsert = $this->update($find->id, $dataTransaction);
+
+            $this->updateOrderStatus($dataTransaction['order_id'], $dataTransaction['status']);
+
         } else {
-
-            $user_id = 1;
-
-            if (Auth::check()) {
-                $user_id = Auth::user()->id; // Não pega via POST!
-            }
-
-            $dataTransaction['user_id'] = $user_id;
 
             $transactionInsert = $this->create($dataTransaction);
         }
@@ -174,16 +121,16 @@ class PagSeguroTransactionRepository extends AbstractRepository implements PagSe
         return $this->delete($id);
     }
 
-    /**
-     * @return array
-     */
-    public function getTransactionStatus($id = null)
+    public function updateOrderStatus($order_id, $status)
     {
-        if (!is_null($id)) {
-            if (array_key_exists($id, $this->transactionStatus)) {
-                return $this->transactionStatus[$id];
-            }
+        $order = $this->order->findOrder($order_id);
+
+        if (count($order)) {
+            $this->order->updateOrder($order_id, ['status' => $status]);
+            return true;
         }
-        return $this->transactionStatus;
+
+        return false;
     }
+
 }

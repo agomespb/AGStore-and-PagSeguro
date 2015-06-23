@@ -40,6 +40,7 @@ class CheckoutController extends Controller
 
         $order = $this->order->insertOrder($data);
         $checkout = $checkoutService->createCheckoutBuilder();
+        $checkout->setReference($order->id);
 
         foreach ($this->cart->all() as $id => $item) {
 
@@ -57,9 +58,6 @@ class CheckoutController extends Controller
         $response = $checkoutService->checkout($checkout->getCheckout());
 
         return redirect($response->getRedirectionUrl());
-
-
-//        return redirect()->route('checkout');
 
     }
 
