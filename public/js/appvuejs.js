@@ -11,11 +11,13 @@ new Vue({
     },
 
     attached: function(){
-
+        //jQuery(this.$$.cep).mask('99999-999');
     },
 
     methods: {
         buscar: function(){
+
+            //console.log(this.cep);
 
             if(/^[0-9]{5}-[0-9]{3}/.test(this.cep)){
 

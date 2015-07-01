@@ -21,17 +21,17 @@
                 </td>
 
                 <td class="cart_price">
-                    {{ date('d/m/Y \à\s H:i', strtotime($order->created_at )) }}
+                    {{ date_to_view($order->created_at) }}
                 </td>
 
                 <td class="cart_total">
                     <p class="cart_total_price">
-                        R$ {{ number_format($order->total, 2, ',', '.') }}
+                        {{ currency_brl($order->total) }}
                     </p>
                 </td>
                 <td class="cart_description">
                     <p class="cart_total_price">
-                        <strong>{{ (array_key_exists($order->status, $status))? $status[$order->status] : 'Aguardando confirmaçao' }}</strong>
+                        <strong>{{ order_transaction_status($order->status) }}</strong>
                     </p>
                 </td>
             </tr>

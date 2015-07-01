@@ -33,7 +33,7 @@ class AccountController extends Controller
             $items = $orders->first()->items()->get();
         }
 
-        $status = $this->order->getTransactionStatus();
+//        $status = $this->order->getTransactionStatus();
 
         return view('user.account', compact('auth', 'orders', 'items', 'status'));
     }

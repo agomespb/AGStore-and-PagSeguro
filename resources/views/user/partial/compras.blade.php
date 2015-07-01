@@ -6,14 +6,14 @@
                 <a data-toggle="collapse" data-parent="#accordion" href="#order{{ $orders->first()->id }}"
                    class="">
                     <strong>Código do Pedido:</strong> {{ $orders->first()->id }}
-                    <strong>Data:</strong> {{ date('d/m/Y \à\s H:i', strtotime($orders->first()->created_at )) }}
+                    <strong>Data:</strong> {{ date_to_view($orders->first()->created_at) }}
                 </a>
             </h4>
         </div>
         <div id="order{{ $orders->first()->id }}" class="panel-collapse collapse in">
             <div class="panel-body">
 
-                <p><strong>Status: {{ ($orders->first()->status)? 'Finalizado' : 'Em processo' }}</strong></p>
+                <p><strong>Status: {{ order_transaction_status($orders->first()->status) }}</strong></p>
 
                 @include('user.partial.item')
 

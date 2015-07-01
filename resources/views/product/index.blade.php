@@ -23,7 +23,7 @@
                     <small>Nome</small>
                 </th>
                 <th>
-                    <small>Valor R$</small>
+                    <small>Valor</small>
                 </th>
                 <th class="text-center">
                     <small>Descrição</small>
@@ -50,7 +50,7 @@
                         <small>{{ $produto->name }}</small>
                     </td>
                     <td>
-                        <small>{{ number_format($produto->price, 2, ',', '.') }}</small>
+                        <small>{{ currency_brl($produto->price) }}</small>
                     </td>
                     <td width="25%">
                         <small>{{ $produto->description }}</small>

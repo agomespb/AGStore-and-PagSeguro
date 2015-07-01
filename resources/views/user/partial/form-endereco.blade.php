@@ -22,7 +22,7 @@
 
                     <div class="col-md-7">
                         <input type="text" class="form-control" name="cep" value="{{ old('cep') }}" v-model="cep"
-                               v-on="keyup:buscar"/>
+                               v-el="cep" v-on="keyup:buscar"/>
                         <span class="text-danger" style="display: none;" v-show="naoLocalizado"><strong>Não
                                 localizado.</strong> Favor forneça manualmente.</span>
                     </div>
@@ -101,7 +101,10 @@
 @section('scripts')
     @parent
 
+    <script src="{{ asset('js/jquery.maskedinput.min.js') }}"></script>
+
     <script src="{{ asset('js/vue.js') }}"></script>
     <script src="{{ asset('js/appvuejs.js') }}"></script>
+
 
 @stop

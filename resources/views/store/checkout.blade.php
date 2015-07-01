@@ -7,7 +7,7 @@
         <div class="container">
 
             <h1>Pedido Gerado com Sucesso!</h1>
-            <h3>Em {{ date('d/m/Y \à\s H:i', strtotime($orders->last()->created_at)) }}</h3>
+            <h3>Em {{ date_to_view($orders->last()->created_at) }}</h3>
 
             <hr>
 
@@ -22,7 +22,7 @@
                         </div>
                         <div id="order{{ $orders->last()->id }}" class="panel-collapse collapse in">
                             <div class="panel-body">
-                                <h3><strong>Total: </strong> R$ {{ number_format($orders->last()->total, 2, ',', '.') }}</h3>
+                                <h3><strong>Total: </strong> {{ currency_brl($orders->last()->total) }}</h3>
 
                                 <p><strong>Situção: {{ ($orders->last()->status)? 'Finalizado' : 'Em processo' }}</strong></p>
 
@@ -58,7 +58,7 @@
                                                 </td>
 
                                                 <td class="cart_price">
-                                                    R$ {{ number_format($item->price, 2, ',', '.') }}
+                                                    {{ currency_brl($item->price) }}
                                                 </td>
 
                                                 <td class="cart_quantity text-center">
@@ -67,7 +67,7 @@
 
                                                 <td class="cart_total">
                                                     <p class="cart_total_price">
-                                                        R$ {{ number_format($item->price * $item->qtde, 2, ',', '.') }}
+                                                        {{ currency_brl($item->price * $item->qtde) }}
                                                     </p>
                                                 </td>
 
@@ -82,7 +82,7 @@
                                         <tr class="cart_menu">
                                             <td class="" colspan="5">
                                                 <div class="pull-right">
-                                                    <span style="margin-right: 90px">TOTAL: R$ {{ number_format($orders->last()->total, 2, ',', '.') }}</span>
+                                                    <span style="margin-right: 90px">TOTAL: {{ currency_brl($orders->last()->total) }}</span>
                                                 </div>
                                             </td>
                                         </tr>

@@ -30,7 +30,7 @@
                 </td>
 
                 <td class="cart_price">
-                    R$ {{ number_format($item->price, 2, ',', '.') }}
+                    {{ currency_brl($item->price) }}
                 </td>
 
                 <td class="cart_quantity text-center">
@@ -39,7 +39,7 @@
 
                 <td class="cart_total">
                     <p class="cart_total_price">
-                        R$ {{ number_format($item->price * $item->qtde, 2, ',', '.') }}
+                        {{ currency_brl($item->price * $item->qtde) }}
                     </p>
                 </td>
 
@@ -54,7 +54,7 @@
         <tr class="cart_menu">
             <td class="" colspan="5">
                 <div class="pull-right">
-                    <h3 style="margin-right: 45px"><strong>Total: </strong> R$ {{ number_format($orders->first()->total, 2, ',', '.') }}</h3>
+                    <h3 style="margin-right: 45px"><strong>Total: </strong> {{ currency_brl($orders->first()->total) }}</h3>
                 </div>
             </td>
         </tr>

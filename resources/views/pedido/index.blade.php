@@ -39,10 +39,10 @@
                         @endforeach
                     </td>
                     <td>
-                        <small>{{ date('d/m/Y \à\s H:i', strtotime($order->created_at )) }}</small>
+                        <small>{{ date_to_view($order->created_at)}}</small>
                     </td>
                     <td>
-                        <small>R$ {{ number_format($order->total, 2, ',', '.') }}</small>
+                        <small>{{ currency_brl($order->total) }}</small>
                     </td>
                     <td width="15%">
 

@@ -46,7 +46,7 @@
                             </td>
 
                             <td class="cart_price">
-                                R$ {{ number_format($item['price'], 2, ',', '.') }}
+                                {{ currency_brl($item['price']) }}
                             </td>
 
                             <td class="cart_quantity text-center">
@@ -57,7 +57,7 @@
 
                             <td class="cart_total">
                                 <p class="cart_total_price">
-                                    R$ {{ number_format($item['price'] * $item['qtde'], 2, ',', '.') }}
+                                    {{ currency_brl($item['price'] * $item['qtde']) }}
                                 </p>
                             </td>
 
@@ -77,7 +77,7 @@
                     <tr class="cart_menu">
                         <td class="" colspan="6">
                             <div class="pull-right">
-                                <span style="margin-right: 90px">TOTAL: R$ {{ number_format($cart->getTotal(), 2, ',', '.') }}</span>
+                                <span style="margin-right: 90px">TOTAL: {{ currency_brl($cart->getTotal()) }}</span>
                                 <a class="btn btn-success" href="{{ route('checkout_place') }}">Fechar a Conta</a>
                             </div>
                         </td>
