@@ -29,8 +29,6 @@ interface PagSeguroTransactionRepositoryInterface {
 
     public function pagSeguroNotificationLink($notificationCode);
 
-    public function getTransactionStatus($id = null);
-
     public function updateOrderStatus($order_id, $status);
 
 }

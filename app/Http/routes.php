@@ -16,7 +16,9 @@ Route::group(['prefix' => '/', 'where' => ['id'=>'[0-9]+']], function() {
 
     Route::get('', ['as' => 'index', 'uses' => 'Store\StoreController@index']);
 
-    Route::get('contact', ['as' => 'contact', 'uses' => 'Store\StoreController@contact']);
+    Route::get('contact', ['as' => 'contact', 'uses' => 'Store\ContactController@getContact']);
+
+    Route::post('contact', ['as' => 'contact_create', 'uses' => 'Store\ContactController@postContact']);
 
     Route::get('category/{id}/products', ['as' => 'index_category', 'uses' => 'Store\StoreController@indexCategory']);
 

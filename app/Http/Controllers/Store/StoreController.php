@@ -42,16 +42,6 @@ class StoreController extends Controller
     }
 
     /**
-     * Show the contact application.
-     *
-     * @return Response
-     */
-    public function contact()
-    {
-        return view('user.contact');
-    }
-
-    /**
      * Show the application For Category.
      *
      * @return Response

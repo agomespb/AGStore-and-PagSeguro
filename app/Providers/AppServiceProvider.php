@@ -67,5 +67,10 @@ class AppServiceProvider extends ServiceProvider
             'AGStore\Repositories\Contracts\PagSeguroNotificationRepositoryInterface',
             'AGStore\Repositories\PagSeguroNotificationRepository'
         );
+
+        $this->app->bind(
+            'AGStore\Repositories\Contracts\ContactRepositoryInterface',
+            'AGStore\Repositories\ContactRepository'
+        );
     }
 }

@@ -13,7 +13,7 @@
 							<strong>Atenção!</strong> Verifique os erros abaixo:<br><br>
 							<ul>
 								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
+									<li>{{ ($error == 'These credentials do not match our records.') ? 'Suas credenciais não constam em nossos registros.' : $error }}</li>
 								@endforeach
 							</ul>
 						</div>
